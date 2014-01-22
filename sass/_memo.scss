@@ -29,3 +29,12 @@ $Memoization-Table: () !default;
   $private-sassy-maps-supress-warnings: false !global;
   @return $result;
 }
+
+//////////////////////////////
+// Memoization Reset
+//////////////////////////////
+@function memo-reset($module) {
+  $module: "#{$module}";
+  $Memoization-Table: map-set-deep($Memoization-Table, $module, null) !global;
+  @return true;
+}
