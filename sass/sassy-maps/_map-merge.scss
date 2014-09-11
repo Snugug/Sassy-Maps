@@ -1,0 +1,77 @@
+//////////////////////////////
+// Map Merge Deep
+//
+// Given two maps, combine their values into a single map.
+//
+// Params:
+// $map-old The original map
+// $map-new The map with the values to add to $map-new
+// $overwrite Should conflicting values in $map-old be overwritten by values in $map-new
+//
+// Returns:
+// The merged map.
+//////////////////////////////
+
+@function map-merge-deep($map-old, $map-new, $overwrite: true){
+  // Iterate through each value of the new map
+  @each $key, $new-value in $map-new {
+    // Check if that value already exists on the old map
+    @if map-has-key($map-old, $key) {
+      // There is an existing key
+      $old-value: map-get($map-old, $key);
+      @if type-of($new-value) == map and type-of($old-value) == map {
+        // If both are maps, recurse regardless of $overwrite
+        $merged-value: map-merge-deep($old-value, $new-value);
+        $map-old: map-set($map-old, $key, $merged-value);
+      }@else{
+        // Otherwise check $overwrite
+        @if $overwrite{
+          $map-old: map-set($map-old, $key, $new-value);
+        }
+      }
+    }@else{
+      // There is no existing key so add
+      $map-old: map-set($map-old, $key, $new-value);
+    }
+  }
+  @return $map-old;
+}
+
+// Usage Example
+// Replace $map-1 with a map made by merging $map-1 and $map-2
+//
+// $map-1:(
+//   alpha: 1,
+//   beta: 1,
+//   charlie:(
+//     delta: 1,
+//     echo: 1,
+//     foxtrot:(
+//       gamma: 1,
+//       hotel: 1
+//     )
+//   )
+// );
+//
+// $map-2:(
+//   alpha: 2,
+//   charlie: (
+//     echo: 2,
+//     foxtrot: (
+//       hotel: 2,
+//       yankee:(
+//         omega: 2
+//       )
+//     )
+//   ),
+//   indigo: (
+//     juliette: 2
+//   )
+// );
+//
+// p::after
+// {
+//   $map-1: map-merge-deep($map-1, $map-2) !global;
+//   content: "#{map-to-string($map-1)}";
+// }
+//

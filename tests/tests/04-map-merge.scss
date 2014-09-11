@@ -1,0 +1,47 @@
+@import "sassy-maps";
+
+$map-1:(
+  alpha: 1,
+  beta: 1,
+  charlie:(
+    delta: 1,
+    echo: 1,
+    foxtrot:(
+      gamma: 1,
+      hotel: 1
+    )
+  )
+);
+
+$map-2:(
+  alpha: 2,
+  charlie: (
+    echo: 2,
+    foxtrot: (
+      hotel: 2,
+      yankee:(
+        omega: 2
+      )
+    )
+  ),
+  indigo: (
+    juliette: 2
+  )
+);
+
+.map-merge-deep {
+
+  &--overwrite-true {
+    _map-1: inspect($map-1);
+    _map-2: inspect($map-2);
+    _test: "map-merge-deep($map-1, $map-2)";
+    _result: inspect(map-merge-deep($map-1, $map-2));
+  }
+
+  &--overwrite-false {
+    _map-1: inspect($map-1);
+    _map-2: inspect($map-2);
+    _test: "map-merge-deep($map-1, $map-2, false)";
+    _result: inspect(map-merge-deep($map-1, $map-2, false));
+  }
+}
