@@ -55,7 +55,7 @@ Then, add the following to your Sass file towards the top:
 * `map-set($map, $key, $value)` - Returns a map that has the `$key` in `$map` set to the to given `$value`.
 * `map-set-deep($map, $keys, $value)` - Returns a map that has the `$key` in `$map` set to the given `$value`. `$key` should be single-depth list of keys, for instance `map-set-deep($map, ('foo' 'bar' 'baz'), "Hello World")`.
 * `map-to-string($map)` - Returns a string representation of the given `$map`.
-
+* `map-merge-deep($map1, $map2, $overwrite)` - Merges `$map1` and `$maps2`, recursing through each map. When a key is encountered shared by both maps, its children will be merged. `$overwrite` sets the merging strategy. If set to `true` (the default), in the event of a key being present in both maps, the value of `$map2`'s key will win. If `$overwrite` is set to `false`, the value of `$map1`'s key' will win.
 
 ## Optional Modules
 

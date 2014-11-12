@@ -1,0 +1,38 @@
+//////////////////////////////
+// Map Merge Deep
+//
+// Given two maps, combine their values into a single map.
+//
+// Params:
+// $map1 The original map
+// $map2 The map with the values to add to $map2
+// $overwrite Should conflicting values in $map1 be overwritten by values in $map2
+//
+// Returns:
+// The merged map.
+//////////////////////////////
+
+@function map-merge-deep($map1, $map2, $overwrite: true){
+  // Iterate through each value of the new map
+  @each $key, $new-value in $map2 {
+    // Check if that value already exists on the old map
+    @if map-has-key($map1, $key) {
+      // There is an existing key
+      $old-value: map-get($map1, $key);
+      @if type-of($new-value) == map and type-of($old-value) == map {
+        // If both are maps, recurse regardless of $overwrite
+        $merged-value: map-merge-deep($old-value, $new-value);
+        $map1: map-set($map1, $key, $merged-value);
+      }@else{
+        // Otherwise check $overwrite
+        @if $overwrite{
+          $map1: map-set($map1, $key, $new-value);
+        }
+      }
+    }@else{
+      // There is no existing key so add
+      $map1: map-set($map1, $key, $new-value);
+    }
+  }
+  @return $map1;
+}
