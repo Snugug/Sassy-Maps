@@ -4,5 +4,11 @@
   "dependencies": {},
   "engines": {
     "node": ">=0.8.0"
+  },
+  "eyeglass": {
+    "name": "Sassy-Maps",
+    "sassDir": "./",
+    "needs": "*",
+    "exports": false
   }
 }
