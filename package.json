@@ -7,7 +7,7 @@
   },
   "eyeglass": {
     "name": "Sassy-Maps",
-    "sassDir": "./",
+    "sassDir": "./sass",
     "needs": "*",
     "exports": false
   }
